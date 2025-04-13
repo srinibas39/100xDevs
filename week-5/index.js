@@ -24,12 +24,14 @@ function generateToken(){
 
 app.post("/signin",(req,res)=>{
 
+  console.log("users",users)
+
   const username = req.body.username;
   const password = req.body.password;
 
   if(username && password){
      // find user exits or not
-     const user = users.find(user=>user.username === username && user.name === user.password === password);
+     const user = users.find(user=>user.username === username && user.password === password);
      if(user){
        const token = generateToken();
        user.token = token
@@ -57,7 +59,24 @@ app.post("/signup",(req , res)=>{
       })
 
       res.json({
-        message:"Successfully signed in"
+        message:"Successfully signed up"
+      })
+    }
+})
+
+//now creating an endpoint --> to access this endpoint you need token
+app.get("/user",(req,res)=>{
+    const token  = req.headers.authorization;
+    const user = users.find(user => user?.token === token);
+
+    if(user){
+      res.json({
+         username : user.username
+      })
+    }
+    else{
+      res.status(401).json({
+         message:"Unauthrized"
       })
     }
 })
