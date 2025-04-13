@@ -1,7 +1,9 @@
 const express = require('express')
 const cors = require('cors')
+const jwt = require('jsonwebtoken');
 const app = express()
 const port = 5000
+const JWT_SECRET = "jwt_secret1234"
 
 
 app.use(express.json());
@@ -33,7 +35,13 @@ app.post("/signin",(req,res)=>{
      // find user exits or not
      const user = users.find(user=>user.username === username && user.password === password);
      if(user){
-       const token = generateToken();
+      //  const token = generateToken();
+      
+      //jwt token
+      const token = jwt.sign({
+         username:username
+      },JWT_SECRET)
+
        user.token = token
        res.json({
         token
@@ -67,12 +75,16 @@ app.post("/signup",(req , res)=>{
 //now creating an endpoint --> to access this endpoint you need token
 app.get("/user",(req,res)=>{
     const token  = req.headers.authorization;
-    const user = users.find(user => user?.token === token);
+    // const user = users.find(user => user?.token === token);
+    const user = jwt.verify(token , JWT_SECRET);
 
-    if(user){
+    const username = user.username;
+
+
+    if(username){
       res.json({
-         username : user.username
-      })
+         username : username
+      })``
     }
     else{
       res.status(401).json({
