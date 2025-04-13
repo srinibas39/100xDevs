@@ -26,6 +26,7 @@ function generateToken(){
 
 function auth(req,res,next){
     const token = req.headers.authorization;
+    console.log("token",token)
     if(token){
       const user  = jwt.verify(token,JWT_SECRET , (err,decoded)=>{
           if(err){
@@ -46,6 +47,13 @@ function auth(req,res,next){
       })
     }
 }
+
+//to host public file
+
+app.get("/",(req,res)=>{
+   res.sendFile(__dirname+"/public/index.html");
+})
+
 
 app.post("/signin",(req,res)=>{
 
@@ -96,7 +104,7 @@ app.post("/signup",(req , res)=>{
 })
 
 //now creating an endpoint --> to access this endpoint you need token
-app.get("/user",auth ,(req,res)=>{
+app.get("/user",auth,(req,res)=>{
     // const token  = req.headers.authorization;
     // // const user = users.find(user => user?.token === token);
     // const user = jwt.verify(token , JWT_SECRET);
@@ -105,11 +113,13 @@ app.get("/user",auth ,(req,res)=>{
 
     const user = req.user
 
+    console.log(user)
+
 
     if(user){
       res.json({
          username : user.username
-      })``
+      })
     }
     else{
       res.status(401).json({

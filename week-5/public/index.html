@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+    <script>
+        async function signin(){
+            const username = document.getElementById("signin-username").value;
+            const password = document.getElementById("signin-password").value;
+
+            if(username && password){
+                const res =await axios.post("http://localhost:5000/signin",{
+                    username,
+                    password
+                })
+
+                localStorage.setItem("token",res.data.token);
+            }
+            await getUserInfo();
+
+              
+
+            alert("signed in successfully");
+         
+
+
+        }
+        async function signup(){
+            const username = document.getElementById("signup-username").value;
+            const password = document.getElementById("signup-password").value;
+
+            if(username && password){
+                await axios.post("http://localhost:5000/signup",{
+                    username,password
+                })
+            }
+
+            alert("signed up successfully");
+        }
+        async function logout(){
+            localStorage.removeItem("token");
+                document.getElementById("signup").style.display = "block"
+                document.getElementById("signin").style.display = "block"
+                document.getElementById("information").style.display = "none"
+                await getUserInfo();
+        }
+
+        async function getUserInfo(){
+            const token = localStorage.getItem("token");
+                 const signup = document.getElementById("signup");
+                const signin = document.getElementById("signin");
+                const logoutBtn = document.getElementById("logout");
+            
+            if(token){
+
+              
+
+                if (signup) signup.style.display = "none";
+                if (signin) signin.style.display = "none";
+                if (logoutBtn) logoutBtn.style.display = "block";
+               
+                // document.getElementById("information").innerHTML = ;
+                const response = await axios.get("http://localhost:5000/user",{
+                    headers:{
+                        authorization:token
+                    }
+                })
+                document.getElementById("information").style.display = "block";
+                document.getElementById("information").innerHTML = response.data.username
+            }
+            else{
+
+                if (signup) signup.style.display = "block";
+                if (signin) signin.style.display = "block";
+                if (logoutBtn) logoutBtn.style.display = "none";
+                
+                document.getElementById("information").style.display = "none"
+            }
+           
+        }
+
+        document.addEventListener("DOMContentLoaded",()=>{  
+            getUserInfo()
+        })
+
+    </script>
+</head>
+<body>
+    <div id="signup">
+        Signup
+        <input id="signup-username" type="text" name="username" placeholder="Username">
+        <input id="signup-password" type="password" name="password" placeholder="Password">
+        <button onclick="signup()">Submit</button>
+    </div>
+    <div id="signin">
+        Signin
+        <input id="signin-username" type="text" name="username" placeholder="Username">
+        <input id="signin-password" type="password" name="password" placeholder="Password">
+        <button onclick="signin()">Submit</button>
+    </div>
+    <div>
+        User information: 
+        <div id="information"></div>
+    </div>
+    <div id="logout">
+        <button onclick="logout()">Logout</button>
+    </div>
+</body>
+</html>
