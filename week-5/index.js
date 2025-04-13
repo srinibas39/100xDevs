@@ -24,6 +24,29 @@ function generateToken(){
   return token;
 }
 
+function auth(req,res,next){
+    const token = req.headers.authorization;
+    if(token){
+      const user  = jwt.verify(token,JWT_SECRET , (err,decoded)=>{
+          if(err){
+             res.status(401).json({
+                message:"Unauthorized"
+             })
+          }
+          else{
+              req.user = decoded
+              next()
+          }
+      });
+
+    }
+    else{
+      res.json({
+        message:"Unauthorized"
+      })
+    }
+}
+
 app.post("/signin",(req,res)=>{
 
   console.log("users",users)
@@ -73,17 +96,19 @@ app.post("/signup",(req , res)=>{
 })
 
 //now creating an endpoint --> to access this endpoint you need token
-app.get("/user",(req,res)=>{
-    const token  = req.headers.authorization;
-    // const user = users.find(user => user?.token === token);
-    const user = jwt.verify(token , JWT_SECRET);
+app.get("/user",auth ,(req,res)=>{
+    // const token  = req.headers.authorization;
+    // // const user = users.find(user => user?.token === token);
+    // const user = jwt.verify(token , JWT_SECRET);
 
-    const username = user.username;
+    // const username = user.username;
+
+    const user = req.user
 
 
-    if(username){
+    if(user){
       res.json({
-         username : username
+         username : user.username
       })``
     }
     else{
