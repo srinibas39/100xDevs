@@ -4,7 +4,7 @@ const jwtSecret = process.env.JWT_SECRET
 
 function auth(req,res,next){
     const token = req.headers.authorization;
-    const response = jwt.verify(token,JWT_SECRET)
+    const response = jwt.verify(token,jwtSecret)
     if(response){
        req.userId = response.userId
        next() 
