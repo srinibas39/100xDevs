@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose")
+const bcrypt = require("bcrypt")
 const { UserModel, TodoModel } = require("./db");
 require("dotenv").config()
 const jwt = require("jsonwebtoken");
@@ -17,11 +18,14 @@ app.post("/signup",async(req,res)=>{
     const email = req.body.email
     const password = req.body.password;
 
-    if(name && password){
+    const hashedPassword = await bcrypt.hash(password,10) //password , salt
+
+
+    if(name && hashedPassword){
         await UserModel.create({
              name,
              email,
-             password
+             password:hashedPassword
         })
 
         res.json({
@@ -36,15 +40,30 @@ app.post("/login",async(req,res)=>{
     const password = req.body.password
 
     if(email && password){
-        const response = await UserModel.findOne({
-            email,password
+        const user = await UserModel.findOne({
+            email
         })
-        const token = await jwt.sign({
-            id:response._id.toString()
-        },jwtSecret);
+     
+        const passwordMatch = await bcrypt.compare(password,user.password)
+        if(user && passwordMatch){
+            const token = await jwt.sign({
+                id:user._id.toString()
+            },jwtSecret);
+    
+            res.json({
+                token
+            })
 
+        }
+        else{
+            res.json({
+                message:"passwords does not match"
+            })
+        }
+    }
+    else{
         res.json({
-            token
+            message:"Invalid credentials"
         })
     }
 })
