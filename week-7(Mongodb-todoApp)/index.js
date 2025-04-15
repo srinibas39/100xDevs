@@ -14,56 +14,72 @@ app.use(express.json())
 mongoose.connect(process.env.DB_URL)
 
 app.post("/signup",async(req,res)=>{
-    const name = req.body.name;
-    const email = req.body.email
-    const password = req.body.password;
+    try{
+        const name = req.body.name;
+        const email = req.body.email
+        const password = req.body.password;
+    
+        const hashedPassword = await bcrypt.hash(password,10) //password , salt
+    
+    
+        if(name && hashedPassword){
+            await UserModel.create({
+                 name,
+                 email,
+                 password:hashedPassword
+            })
+    
+            res.json({
+                message:"You are successfully signed in"
+            })
+        }
 
-    const hashedPassword = await bcrypt.hash(password,10) //password , salt
-
-
-    if(name && hashedPassword){
-        await UserModel.create({
-             name,
-             email,
-             password:hashedPassword
-        })
-
-        res.json({
-            message:"You are successfully signed in"
+    }
+    catch(err){
+        res.status(500).json({
+            message:"Error while signing up"
         })
     }
 
 })
 
 app.post("/login",async(req,res)=>{
-    const email = req.body.email;
-    const password = req.body.password
-
-    if(email && password){
-        const user = await UserModel.findOne({
-            email
-        })
-     
-        const passwordMatch = await bcrypt.compare(password,user.password)
-        if(user && passwordMatch){
-            const token = await jwt.sign({
-                id:user._id.toString()
-            },jwtSecret);
+    try{
+        const email = req.body.email;
+        const password = req.body.password
     
-            res.json({
-                token
+        if(email && password){
+            const user = await UserModel.findOne({
+                email
             })
-
+         
+            const passwordMatch = await bcrypt.compare(password,user.password)
+            if(user && passwordMatch){
+                const token = await jwt.sign({
+                    id:user._id.toString()
+                },jwtSecret);
+        
+                res.json({
+                    token
+                })
+    
+            }
+            else{
+                res.json({
+                    message:"passwords does not match"
+                })
+            }
         }
         else{
             res.json({
-                message:"passwords does not match"
+                message:"Invalid credentials"
             })
         }
+
     }
-    else{
-        res.json({
-            message:"Invalid credentials"
+    catch(err){
+        res.statusCode(500).json({
+            message:"Error while logging in"
         })
     }
 })
@@ -90,20 +106,30 @@ app.post("/todos",auth,async(req,res)=>{
         }
     }
     catch(e){
-        console.log(e)
+       res.status(500).json({
+        message:"Error While creating todo"
+       })
     }
     
 })
 
 app.get("/todos",auth , async(req,res)=>{
-    const userId = req.userId;
-    const response = await TodoModel.find({
-        userId
-    })
+    try{
+        const userId = req.userId;
+        const response = await TodoModel.find({
+            userId
+        })
+    
+        res.json({
+            todos:response
+        })
 
-    res.json({
-        todos:response
-    })
+    }
+    catch(err){
+        res.status(500).json({
+            message:"Error while fetching todo"
+        })
+    }
 })  
 
 app.get("/",(req,res)=>{
