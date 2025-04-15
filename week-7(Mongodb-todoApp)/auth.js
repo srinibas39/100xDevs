@@ -6,17 +6,18 @@ function auth(req,res,next){
     const token = req.headers.authorization;
     const response = jwt.verify(token,jwtSecret)
     if(response){
-       req.userId = response.userId
+       req.userId = response.id
        next() 
     }
     else{
         res.json({
             message:"Invalid token"
         }).status(403)
+        return;
     }
 }
 
 module.exports = {
     auth,
-    JWT_SECRET
+    jwtSecret
 }

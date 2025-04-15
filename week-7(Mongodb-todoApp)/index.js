@@ -1,8 +1,12 @@
 const express = require("express");
-const { UserModel } = require("./db");
+const mongoose = require("mongoose")
+const { UserModel, TodoModel } = require("./db");
 require("dotenv").config()
+const jwt = require("jsonwebtoken");
+const { auth } = require("./auth");
 const app = express();
 const port = process.env.PORT
+const jwtSecret = process.env.JWT_SECRET
 
 app.use(express.json())
 
@@ -27,19 +31,61 @@ app.post("/signup",async(req,res)=>{
 
 })
 
-app.post("/login",(req,res)=>{
+app.post("/login",async(req,res)=>{
+    const email = req.body.email;
+    const password = req.body.password
 
+    if(email && password){
+        const response = await UserModel.findOne({
+            email,password
+        })
+        const token = await jwt.sign({
+            id:response._id.toString()
+        },jwtSecret);
+
+        res.json({
+            token
+        })
+    }
 })
 
 //authenticated
 
-app.post("/todos",(req,res)=>{
-
+app.post("/todos",auth,async(req,res)=>{
+    try{
+        const userId = req.userId;
+        const title = req.body.title;
+        const done = req.body.done;
+        if (userId && title && typeof done === "boolean"){
+             await TodoModel.create({
+             userId,
+             title,
+             done
+           }) 
+  
+          //  console.log("res",res)
+     
+           res.json({
+              message:"todo is created"
+           })
+        }
+    }
+    catch(e){
+        console.log(e)
+    }
+    
 })
 
-app.get("/todos",(req,res)=>{
+app.get("/todos",auth , async(req,res)=>{
+    const userId = req.userId;
+    const response = await TodoModel.find({
+        userId
+    })
 
-})
+    res.json({
+        todos:response
+    })
+})  
 
 app.get("/",(req,res)=>{
     res.json({
