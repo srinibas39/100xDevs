@@ -15,4 +15,6 @@ app.use("/api/v1/user",userRouter);
 app.use("/api/v1/course",courseRouter);
 app.use("/api/v1/admin",adminRouter)
 
-app.listen(port)
+app.listen(port,()=>{
+    console.log("App is listening")
+})
