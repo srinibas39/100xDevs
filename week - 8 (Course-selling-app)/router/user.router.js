@@ -9,7 +9,7 @@ userRouter.post("signin",(req,res)=>{
     
 })
 
-userRouter.get("purchases",(req,res)=>{
+userRouter.get("purchasedCourses",(req,res)=>{
     //For course purchases
 })
 
