@@ -33,8 +33,9 @@ userRouter.post("/signup",async(req,res)=>{
         }
     }
     catch(e){
+        console.log(e)
         res.json({
-            message:"Internal Server error"
+            message:e
         }).status(500)
     }
 })
@@ -77,7 +78,7 @@ userRouter.post("/signin",async(req,res)=>{
       }
       catch(err){
           res.status(500).json({
-              message:"internal server error"
+            message:err
           })
       }  
 })
@@ -100,7 +101,7 @@ userRouter.get("/purchasedCourses",auth , async(req,res)=>{
     }
     catch(e){
         res.status(500).json({
-            message:"Internal server errro"
+            message:e
         })
     }
 })

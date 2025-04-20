@@ -20,7 +20,7 @@ courseRouter.get("/courses/:courseId",auth,async(req,res)=>{
     }
     catch(e){
         res.status(500).json({
-            message:"Internal server error"
+            message:e
         })
     }
 
@@ -35,7 +35,7 @@ courseRouter.get("/preview",async(req,res)=>{
   }
   catch(err){
     res.status(500).json({
-        message:"Internal server error"
+        message:err
     })
   }
 })

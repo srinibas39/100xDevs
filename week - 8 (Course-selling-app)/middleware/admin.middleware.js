@@ -5,7 +5,7 @@ const jwtSecret = process.env.JWT_SECRET_KEY_ADMIN
 
 function authAdmin(req,res,next){
     try{
-        const {token} = req.headers.authorization;
+        const token = req.headers.authorization;
         if(!token){
             return res.json({
                 message:"token does not exist"
@@ -23,7 +23,7 @@ function authAdmin(req,res,next){
     }
     catch(err){
         res.status(500).json({
-            message:"Internal server error"
+            message:err
         })
     }
 }

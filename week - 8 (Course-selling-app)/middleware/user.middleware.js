@@ -5,7 +5,7 @@ const jwtSecret = process.env.JWT_SECRET_KEY_USER
 
 function auth(req,res,next){
     try{
-        const {token} = req.headers.authorization;
+        const token = req.headers.authorization;
         if(!token){
             return res.json({
                 message:"token does not exist"

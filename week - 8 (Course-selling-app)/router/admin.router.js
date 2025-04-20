@@ -36,6 +36,7 @@ adminRouter.post("/signup",async(req,res)=>{
         }
     }
     catch(e){
+        console.log("e",e)
         res.json({
             message:"Internal Server error"
         }).status(500)
@@ -56,14 +57,14 @@ adminRouter.post("/signin",async(req,res)=>{
             }).status(403)
        }
        else{
-           const admin = await adminModel.findOne({email})
+           const admin = await adminModel.findOne({email:parsedUser.data.email})
            if(!admin){
               return res.json({
                  message:"user not present"
               }).status(403)
            }
            //password check
-           const passwordMatch = await bcrypt.compare(password,admin.password)
+           const passwordMatch = await bcrypt.compare(parsedUser.data.password,admin.password)
            if(!passwordMatch){
               return res.status(403).json({
                 message:"password does not match"
@@ -80,7 +81,7 @@ adminRouter.post("/signin",async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:"internal server error"
+            message:err
         })
     }
 })
@@ -92,15 +93,17 @@ adminRouter.post("/course", authAdmin , async(req,res)=>{
         const {title,description,price,imageUrl} = req.body;
 
         const courseSchema = z.object({
-            title:String,
-            description:String,
-            price:Number,
-            imageUrl:String
+            title:z.string(),
+            description:z.string(),
+            price:z.number(),
+            imageUrl:z.string()
         })
 
         const parsedData = courseSchema.safeParse({
             title,description,price,imageUrl
         })
+
+   
 
         if(!parsedData.success){
             return res.json({
@@ -120,8 +123,8 @@ adminRouter.post("/course", authAdmin , async(req,res)=>{
     }
     catch(err){
         res.json({
-            message : "Internal server error"
-        }).status(5000)
+            message:err
+        }).status(500)
     }
 
 })
@@ -143,7 +146,7 @@ adminRouter.delete("/course/:courseid",authAdmin , async(req,res)=>{
     }
     catch(err){
         res.json({
-            message:"Internal server error"
+            message:err
         }).status(500)
     }
 })
@@ -189,7 +192,7 @@ adminRouter.put("/course/:courseId",authAdmin, async(req,res)=>{
     }
     catch{
         res.json({
-            message:"internal server error"
+            message:err
         }).status(403)
     }
 })
@@ -203,9 +206,9 @@ adminRouter.get("/course/bulk",authAdmin, async(req,res)=>{
             courses
         })
     }
-    catch{
+    catch(e){
         res.status(500).json({
-            message:"Internal server error"
+            message:e
         })
     }
 })
