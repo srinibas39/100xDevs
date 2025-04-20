@@ -89,3 +89,43 @@ class Employee implements Person {
         console.log(`${phrase} ${this.name}`);
     }
 }
+
+//types
+
+type User2 = {
+    firstName : string,
+    lastName : string,
+    age: number
+}
+
+//union
+
+type id = string | number
+
+function getId(id:id){
+    console.log("ID:",id)
+}
+
+getId("hello123");
+getId(33);
+
+
+//intersection
+type Emploees = {
+    name : string,
+    startDate : Date;
+}
+
+type Manager = {
+    name : string,
+    department : string
+}
+
+type TeamLead = Emploees & Manager
+
+const teamLead :TeamLead = {
+    name:"sri",
+    department:"IT",
+    startDate:new Date()
+}
+
