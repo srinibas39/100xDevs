@@ -129,3 +129,51 @@ const teamLead :TeamLead = {
     startDate:new Date()
 }
 
+
+//Arrays in TS
+function maxValue(arr:number[]){
+    let max = 0;
+    for(let i=0;i<arr.length;i++){
+        if(arr[i] > max){
+            max=arr[i]
+        }
+    }
+
+    return max;
+}
+
+
+console.log(maxValue([1,2,3]))
+
+//Example
+ type User3 = {
+    firstname:string,
+    lastname:string,
+    age:number
+ }
+
+ type UserList = User3[];
+
+ function getLegal(users:UserList){
+    return users.filter(user=>user.age>=18)
+ }
+
+ let xz=getLegal([
+    {
+        firstname:"hari",
+        lastname:"abc",
+        age:17
+    },
+    {
+        firstname:"hariom",
+        lastname:"abc",
+        age:18
+    },
+    {
+        firstname:"hariiiii",
+        lastname:"abc",
+        age:20
+    },
+ ])
+
+ console.log(xz)
