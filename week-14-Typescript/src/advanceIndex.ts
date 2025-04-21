@@ -1,3 +1,4 @@
+//Pick
 interface User1 {
     firstName:string,
     lastName:string,
@@ -17,3 +18,24 @@ getUserProfile({
     firstName:"srinibas",
     age:20
 })
+
+//Paritial
+
+interface User4{
+    id:string,
+    name:string,
+    email:string,
+    age:number,
+    createadAt:Date
+}
+
+type userInfo = Pick<User4,"name"|"email">;
+
+type UserInfoPartial = Partial<userInfo>
+
+const getUserProfile2 = (user:UserInfoPartial)=>{
+    console.log(`name: ${user?.name} email: ${user?.email}`)
+}
+
+
+getUserProfile2({})
