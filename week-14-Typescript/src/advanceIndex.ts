@@ -53,3 +53,38 @@ export const config:config={
 }
 
 // config.apiKey = "dasdasd"
+
+//Record --> For writing cleaner objects
+interface User5{
+    name:string,
+    age:number
+}
+
+type users = {
+    [key:string]:User5
+}
+
+export const users:users = {
+    'abc123':{name:"a",age:19},
+    'cyz354':{name:"b",age:20}
+}
+
+//clear way of writing this using Recor
+
+interface User6{
+    name:string,
+    age:number
+}
+
+type users1 = Record<string,User6>
+
+export const allUsers:users1 = {
+    'abc123':{name:"a",age:19},
+    'cyz354':{name:"b",age:20}
+}
+
+//Map is fancier way to set object
+
+interface User7{
+    
+}
