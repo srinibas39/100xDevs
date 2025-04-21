@@ -96,3 +96,16 @@ users2.set('abc123',{name:"a",age:19});
 users2.set('abc123',{name:"a",age:19});
 
 console.log(users2);
+
+//Excelude --> if you want to excelude a certain event
+type Event = 'click' | 'scroll' | 'mousemove';
+type ExcludedScroll = Exclude<Event,'scroll'>;
+
+
+const getEvent= (e:ExcludedScroll)=>{
+    console.log(e)
+}
+
+getEvent('click')
+// getEvent('scroll')
+
