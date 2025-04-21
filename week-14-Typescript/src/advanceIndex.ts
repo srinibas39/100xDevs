@@ -39,3 +39,17 @@ const getUserProfile2 = (user:UserInfoPartial)=>{
 
 
 getUserProfile2({})
+
+//Readonly should not be altered after intialization
+
+interface config{
+    readonly apiKey:string,
+    readonly endPoint:string
+}
+
+export const config:config={
+    apiKey:"123132",
+    endPoint:"something"
+}
+
+// config.apiKey = "dasdasd"
