@@ -86,5 +86,13 @@ export const allUsers:users1 = {
 //Map is fancier way to set object
 
 interface User7{
-    
+    name:string,
+    age:number
 }
+
+const users2 = new Map<string,User7>();
+
+users2.set('abc123',{name:"a",age:19});
+users2.set('abc123',{name:"a",age:19});
+
+console.log(users2);
