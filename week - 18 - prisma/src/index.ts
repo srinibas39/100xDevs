@@ -61,8 +61,61 @@ const deleteUser = async(id:number)=>{
     }
 }
 
-// insertUser("sri","sri@gmail.com","1234")
+//todos
+
+interface Todo{
+    title:string,
+    description:string,
+    done:boolean,
+    userId:number
+}
+const createTodo = async({title,description,done,userId}:Todo)=>{
+    const response = await prisma.todo.create({
+        data:{
+            title,
+            description,
+            done,
+            userId
+        }
+    })
+
+    console.log(response)
+}
+
+const getTodos = async(userId:number)=>{
+    const res = await prisma.todo.findMany({
+        where:{
+            userId:userId
+        }
+    })
+
+    console.log("res",res)
+}
+
+const getTodosAndUserDetails = async(userId:number)=>{
+    const res = await prisma.todo.findMany({
+        where:{
+            userId:userId
+        },
+        select:{
+            user:{
+                select:{
+                    username:true,
+                    email:true
+                }
+            },
+            title:true,
+            description:true
+        }
+    })
+
+    console.log("response",res)
+}
+
+// insertUser("sri","sri@gmail.com","1234");
 // updateUser(1,{username:"bs",email:"bs@gmail.com",password:"12345"})
 // getUser(1);
-deleteUser(1);
-
+// deleteUser(1);
+// createTodo({title:"Date",description:"Going to date",done:false,userId:2})
+// getTodos(2);
+getTodosAndUserDetails(2);
