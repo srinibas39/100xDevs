@@ -2002,6 +2002,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
+    done: boolean | null
     userId: number | null
   }
 
@@ -2009,6 +2010,7 @@ export namespace Prisma {
     id: number | null
     title: string | null
     description: string | null
+    done: boolean | null
     userId: number | null
   }
 
@@ -2016,6 +2018,7 @@ export namespace Prisma {
     id: number
     title: number
     description: number
+    done: number
     userId: number
     _all: number
   }
@@ -2035,6 +2038,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    done?: true
     userId?: true
   }
 
@@ -2042,6 +2046,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    done?: true
     userId?: true
   }
 
@@ -2049,6 +2054,7 @@ export namespace Prisma {
     id?: true
     title?: true
     description?: true
+    done?: true
     userId?: true
     _all?: true
   }
@@ -2143,6 +2149,7 @@ export namespace Prisma {
     id: number
     title: string
     description: string
+    done: boolean
     userId: number
     _count: TodoCountAggregateOutputType | null
     _avg: TodoAvgAggregateOutputType | null
@@ -2169,6 +2176,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    done?: boolean
     userId?: boolean
   }, ExtArgs["result"]["todo"]>
 
@@ -2176,6 +2184,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    done?: boolean
     userId?: boolean
   }, ExtArgs["result"]["todo"]>
 
@@ -2183,6 +2192,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    done?: boolean
     userId?: boolean
   }, ExtArgs["result"]["todo"]>
 
@@ -2190,10 +2200,11 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     description?: boolean
+    done?: boolean
     userId?: boolean
   }
 
-  export type TodoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "userId", ExtArgs["result"]["todo"]>
+  export type TodoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "done" | "userId", ExtArgs["result"]["todo"]>
 
   export type $TodoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Todo"
@@ -2202,6 +2213,7 @@ export namespace Prisma {
       id: number
       title: string
       description: string
+      done: boolean
       userId: number
     }, ExtArgs["result"]["todo"]>
     composites: {}
@@ -2629,6 +2641,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Todo", 'Int'>
     readonly title: FieldRef<"Todo", 'String'>
     readonly description: FieldRef<"Todo", 'String'>
+    readonly done: FieldRef<"Todo", 'Boolean'>
     readonly userId: FieldRef<"Todo", 'Int'>
   }
     
@@ -3024,6 +3037,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     description: 'description',
+    done: 'done',
     userId: 'userId'
   };
 
@@ -3076,6 +3090,13 @@ export namespace Prisma {
    * Reference to a field of type 'String[]'
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -3152,6 +3173,7 @@ export namespace Prisma {
     id?: IntFilter<"Todo"> | number
     title?: StringFilter<"Todo"> | string
     description?: StringFilter<"Todo"> | string
+    done?: BoolFilter<"Todo"> | boolean
     userId?: IntFilter<"Todo"> | number
   }
 
@@ -3159,6 +3181,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    done?: SortOrder
     userId?: SortOrder
   }
 
@@ -3169,6 +3192,7 @@ export namespace Prisma {
     NOT?: TodoWhereInput | TodoWhereInput[]
     title?: StringFilter<"Todo"> | string
     description?: StringFilter<"Todo"> | string
+    done?: BoolFilter<"Todo"> | boolean
     userId?: IntFilter<"Todo"> | number
   }, "id">
 
@@ -3176,6 +3200,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    done?: SortOrder
     userId?: SortOrder
     _count?: TodoCountOrderByAggregateInput
     _avg?: TodoAvgOrderByAggregateInput
@@ -3191,6 +3216,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Todo"> | number
     title?: StringWithAggregatesFilter<"Todo"> | string
     description?: StringWithAggregatesFilter<"Todo"> | string
+    done?: BoolWithAggregatesFilter<"Todo"> | boolean
     userId?: IntWithAggregatesFilter<"Todo"> | number
   }
 
@@ -3245,6 +3271,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
+    done?: boolean
     userId: number
   }
 
@@ -3252,12 +3279,14 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
+    done?: boolean
     userId: number
   }
 
   export type TodoUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    done?: BoolFieldUpdateOperationsInput | boolean
     userId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -3265,6 +3294,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    done?: BoolFieldUpdateOperationsInput | boolean
     userId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -3272,12 +3302,14 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
+    done?: boolean
     userId: number
   }
 
   export type TodoUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    done?: BoolFieldUpdateOperationsInput | boolean
     userId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -3285,6 +3317,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    done?: BoolFieldUpdateOperationsInput | boolean
     userId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -3377,10 +3410,16 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type TodoCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    done?: SortOrder
     userId?: SortOrder
   }
 
@@ -3393,6 +3432,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    done?: SortOrder
     userId?: SortOrder
   }
 
@@ -3400,12 +3440,21 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
+    done?: SortOrder
     userId?: SortOrder
   }
 
   export type TodoSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -3418,6 +3467,10 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -3487,6 +3540,19 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
 

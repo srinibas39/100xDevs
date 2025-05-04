@@ -16,9 +16,9 @@ model User {
 }
 
 model Todo {
-  id          Int    @unique @default(autoincrement())
+  id          Int     @unique @default(autoincrement())
   title       String
   description String
-  // done Boolean @default(false)
+  done        Boolean @default(false)
   userId      Int
 }
