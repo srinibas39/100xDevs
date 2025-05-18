@@ -1,6 +1,6 @@
 
-"use client";
 
+ "use client"
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -12,15 +12,22 @@ export default function Home() {
   }
 
   const [user,setUser] = useState<User>({name:"",email:""})
+  const [loading,setLoading] = useState(true)
 
   const getUser = async()=>{
       const res = await axios.get("https://week-13-offline.kirattechnologies.workers.dev/api/v1/user/details")
       setUser(res.data)
+      // setLoading(false)
   }
   useEffect(()=>{
     getUser()
   },[])
-  return (
+
+  if(loading){
+    return <div>loading...</div>
+  }
+
+  return !loading && (
      <div>
         <p>Username {user?.name}</p>
         <p>Email {user?.email}</p>
