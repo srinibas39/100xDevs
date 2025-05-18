@@ -17,7 +17,7 @@ export default function Home() {
   const getUser = async()=>{
       const res = await axios.get("https://week-13-offline.kirattechnologies.workers.dev/api/v1/user/details")
       setUser(res.data)
-      // setLoading(false)
+      setLoading(false)
   }
   useEffect(()=>{
     getUser()
