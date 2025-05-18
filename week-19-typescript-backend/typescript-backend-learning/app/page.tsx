@@ -2,8 +2,9 @@ import axios from "axios"
 
 
 async function getUser(){
-  const response = await axios.get("https://week-13-offline.kirattechnologies.workers.dev/api/v1/user/details")
-  // await delay(5000)
+  const response = await axios.get("http://localhost:3000/api/user")
+  console.log(response)
+  // await delay(5000)`
   return response.data;
 }
 
