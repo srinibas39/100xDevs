@@ -3,7 +3,12 @@ import axios from "axios"
 
 async function getUser(){
   const response = await axios.get("https://week-13-offline.kirattechnologies.workers.dev/api/v1/user/details")
+  // await delay(5000)
   return response.data;
+}
+
+function delay(ms:number){
+  return new Promise(resolve=>setTimeout(resolve,ms))
 }
 
 export default async function Home() {
