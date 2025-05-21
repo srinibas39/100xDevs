@@ -1,12 +1,29 @@
 import axios from "axios"
 import Link from "next/link";
+import client from "./utils/db";
 
+
+// async function getUser(){
+//   const response = await axios.get("http://localhost:3000/api/user")
+//   console.log(response)
+//   // await delay(5000)`
+//   return response.data.user;
+// }
 
 async function getUser(){
-  const response = await axios.get("http://localhost:3000/api/user")
-  console.log(response)
-  // await delay(5000)`
-  return response.data;
+   try{
+    //direct database call
+      const user = client.user.findFirst({
+        select:{
+          name:true
+        }
+      })
+     return user
+
+   }
+   catch(e){
+    console.log(e)
+   }
 }
 
 function delay(ms:number){
@@ -22,8 +39,7 @@ export default async function Home() {
                 <div>
                     Name: {userData?.name}
                 </div>
-                
-                {userData?.email}
+          
             </div>
             <div className="border p-8 rounded">
                 <Link href="/signup"  >Signup</Link>
