@@ -1,16 +1,25 @@
 "use client"
 import axios from "axios";
 import { ChangeEventHandler, useState } from "react";
+import { signup } from "../actions/user";
+import { useRouter } from "next/navigation";
+
 
 export function SignupComp() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const router = useRouter()
 
     const handleSignup = async()=>{
-        const res = await axios.post("http://localhost:3000/api/auth/signup",{
-            name:username,
-            password:password
-        })
+        // const res = await axios.post("http://localhost:3000/api/auth/signup",{
+        //     name:username,
+        //     password:password
+        // })
+
+        //server actions
+        const res = await signup(username,password)
+        console.log("res",res)
+        router.push("/")
     }
 
     return <div className="h-screen flex justify-center flex-col">
