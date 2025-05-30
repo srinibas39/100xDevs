@@ -1,8 +1,5 @@
 import client from "@/app/utils/db";
-import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-
-
 
 
 export async function POST(req:NextRequest){

@@ -13,7 +13,7 @@ export async function signup(name:string,password:string){
 
         return "Signed up"
     }
-    catch(e){
+    catch(e){``
         console.log(e);
-    }
+    }``
 }
